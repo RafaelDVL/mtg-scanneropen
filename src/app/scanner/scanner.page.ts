@@ -9,7 +9,7 @@ import { NgIf } from '@angular/common';
 import { UpperCasePipe } from '@angular/common';
 import { AlertController } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { camera, cameraOutline } from 'ionicons/icons';
+import { camera, cameraOutline, scanOutline } from 'ionicons/icons';
 
 interface ParsedOcrResult {
   collectorNumber?: string;
@@ -49,7 +49,7 @@ export class ScannerPage implements OnInit, OnDestroy {
     private db: DatabaseService,
     private alertCtrl: AlertController
   ) {
-    addIcons({ camera, cameraOutline });
+    addIcons({ camera, cameraOutline, scanOutline });
   }
 
   async ngOnInit() {
@@ -287,6 +287,7 @@ export class ScannerPage implements OnInit, OnDestroy {
       is_foil: false,
       scanned_at: new Date().toISOString(),
       image_url: this.scryfall.getCardImageUrl(card) || undefined,
+      price_usd: card.prices?.usd ? parseFloat(card.prices.usd) : undefined,
     };
     await this.db.addCardToCollection(collectionId, entry);
     this.totalCards++;

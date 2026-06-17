@@ -23,6 +23,13 @@ export interface ScryfallCard {
   type_line: string;
   mana_cost: string;
   lang: string;
+  prices?: {
+    usd?: string | null;
+    usd_foil?: string | null;
+    eur?: string | null;
+    eur_foil?: string | null;
+    tix?: string | null;
+  };
 }
 
 interface CacheEntry {

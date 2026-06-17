@@ -19,7 +19,7 @@ import { AlertController } from '@ionic/angular/standalone';
   ],
 })
 export class CollectionPage implements OnInit {
-  collections: (Collection & { cardCount: number })[] = [];
+  collections: (Collection & { cardCount: number, totalPrice: number })[] = [];
 
   constructor(
     private db: DatabaseService,
@@ -44,7 +44,8 @@ export class CollectionPage implements OnInit {
       for (const col of cols) {
         const cards = await this.db.getCardsInCollection(col.id!);
         const cardCount = cards.reduce((s, c) => s + c.qty, 0);
-        updated.push({ ...col, cardCount });
+        const totalPrice = cards.reduce((s, c) => s + ((c.price_usd || 0) * c.qty), 0);
+        updated.push({ ...col, cardCount, totalPrice });
       }
       this.collections = updated;
     } catch (e) {

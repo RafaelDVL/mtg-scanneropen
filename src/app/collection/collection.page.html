@@ -29,14 +29,14 @@
     <ion-button expand="block" (click)="goToScanner()">Ir para o Scanner</ion-button>
   </div>
 
-  <ion-list *ngIf="collections.length > 0">
-    <ion-item *ngFor="let col of collections" (click)="openCollection(col.id!)" detail>
+  <ion-list *ngIf="collections.length > 0" class="transparent-list">
+    <ion-item *ngFor="let col of collections" (click)="openCollection(col.id!)" detail class="glass-item">
       <ion-label>
         <h2>{{ col.name }}</h2>
         <p>{{ col.cardCount }} carta{{ col.cardCount !== 1 ? 's' : '' }}</p>
       </ion-label>
-      <ion-note slot="end">
-        <ion-icon name="chevron-forward"></ion-icon>
+      <ion-note slot="end" color="primary" *ngIf="col.totalPrice > 0" class="price-note">
+        $ {{ col.totalPrice.toFixed(2) }}
       </ion-note>
     </ion-item>
   </ion-list>

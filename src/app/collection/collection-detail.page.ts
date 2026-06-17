@@ -25,6 +25,7 @@ export class CollectionDetailPage implements OnInit {
   collection: Collection | null = null;
   cards: CollectionCard[] = [];
   totalQty = 0;
+  totalPrice = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -48,6 +49,7 @@ export class CollectionDetailPage implements OnInit {
     try {
       this.cards = await this.db.getCardsInCollection(this.collection.id);
       this.totalQty = this.cards.reduce((sum, c) => sum + c.qty, 0);
+      this.totalPrice = this.cards.reduce((sum, c) => sum + ((c.price_usd || 0) * c.qty), 0);
     } catch {}
   }
 

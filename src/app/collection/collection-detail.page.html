@@ -5,7 +5,10 @@
         <ion-icon name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>{{ collection?.name || 'Coleção' }} ({{ totalQty }})</ion-title>
+    <ion-title>
+      {{ collection?.name || 'Coleção' }} ({{ totalQty }})
+      <span *ngIf="totalPrice > 0" class="header-price">• $ {{ totalPrice.toFixed(2) }}</span>
+    </ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="exportCollection()" *ngIf="cards.length > 0">
         <ion-icon name="share-outline"></ion-icon>
@@ -17,7 +20,10 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">{{ collection?.name || 'Coleção' }} ({{ totalQty }})</ion-title>
+      <ion-title size="large">
+        {{ collection?.name || 'Coleção' }} ({{ totalQty }})
+        <div *ngIf="totalPrice > 0" class="large-price">$ {{ totalPrice.toFixed(2) }}</div>
+      </ion-title>
     </ion-toolbar>
   </ion-header>
 
@@ -38,6 +44,9 @@
         <ion-label>
           <h2>{{ card.name }}</h2>
           <p>{{ card.set_code | uppercase }} • #{{ card.collector_number }}</p>
+          <ion-badge color="primary" *ngIf="card.price_usd" class="card-price">
+            $ {{ card.price_usd }}
+          </ion-badge>
         </ion-label>
         <div class="qty-controls" slot="end">
           <ion-button size="small" fill="outline" (click)="decrementQty(card)" [disabled]="card.qty <= 0">-</ion-button>

@@ -17,6 +17,7 @@ export interface CollectionCard {
   is_foil: boolean;
   scanned_at: string;
   image_url?: string;
+  price_usd?: number;
 }
 
 @Injectable({

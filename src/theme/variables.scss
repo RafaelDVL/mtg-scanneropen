@@ -1,2 +1,48 @@
-// For information on how to create your own theme, please refer to:
-// https://ionicframework.com/docs/theming/
+// Tema Dark Fantasy (MTG Scanner)
+:root {
+  /** Primary: Dourado Mítico (Mythic Gold/Orange) */
+  --ion-color-primary: #D4AF37;
+  --ion-color-primary-rgb: 212,175,55;
+  --ion-color-primary-contrast: #000000;
+  --ion-color-primary-contrast-rgb: 0,0,0;
+  --ion-color-primary-shade: #bb9a30;
+  --ion-color-primary-tint: #d8b74b;
+
+  /** Secondary: Magia Azul / Violeta (Arcane) */
+  --ion-color-secondary: #7B68EE;
+  --ion-color-secondary-rgb: 123,104,238;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255,255,255;
+  --ion-color-secondary-shade: #6c5bd1;
+  --ion-color-secondary-tint: #8877ef;
+
+  /** Backgrounds: Jet Black / Charcoal */
+  --ion-background-color: #0d0d0f;
+  --ion-background-color-rgb: 13,13,15;
+  
+  --ion-text-color: #e0e0e0;
+  --ion-text-color-rgb: 224,224,224;
+
+  --ion-color-step-50: #19191d;
+  --ion-color-step-100: #25252a;
+  --ion-color-step-150: #313138;
+  --ion-color-step-200: #3e3e45;
+  --ion-color-step-250: #4a4a53;
+  --ion-color-step-300: #565660;
+  --ion-color-step-350: #62626e;
+  --ion-color-step-400: #6e6e7b;
+  --ion-color-step-450: #7a7a89;
+  --ion-color-step-500: #868696;
+  --ion-color-step-550: #9393a4;
+  --ion-color-step-600: #9f9fb1;
+  --ion-color-step-650: #ababbf;
+  --ion-color-step-700: #b7b7cc;
+  --ion-color-step-750: #c3c3d9;
+  --ion-color-step-800: #cfcfe7;
+  --ion-color-step-850: #dbdbf4;
+  --ion-color-step-900: #e7e7ff;
+  --ion-color-step-950: #f3f3ff;
+
+  --ion-item-background: #151518;
+  --ion-card-background: #1a1a1f;
+}
