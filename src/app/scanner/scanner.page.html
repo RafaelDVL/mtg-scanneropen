@@ -1,0 +1,70 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>MTG Scanner</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="goToCollection()">
+        <ion-label>Coleção ({{ totalCards }})</ion-label>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="scanner-content">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">MTG Scanner</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="scanner-container" *ngIf="previewActive && !loading && !scanResult && !error">
+    <div class="guide-area">
+      <div class="guide-frame">
+        <ion-icon name="camera-outline" class="camera-icon"></ion-icon>
+        <p class="guide-hint">Centralize a carta no quadro</p>
+      </div>
+    </div>
+    <div class="guide-footer">
+      <ion-button expand="block" class="capture-btn" (click)="capturePhoto()">
+        <ion-icon name="camera" slot="start"></ion-icon>
+        Capturar
+      </ion-button>
+    </div>
+  </div>
+
+  <div class="loading-container" *ngIf="loading">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Analisando carta...</p>
+  </div>
+
+  <div class="error-container" *ngIf="error && !loading">
+    <ion-text color="danger">
+      <p>{{ error }}</p>
+    </ion-text>
+    <ion-button expand="block" (click)="retry()">Tentar novamente</ion-button>
+  </div>
+
+  <div class="result-container" *ngIf="scanResult">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>{{ scanResult.card?.name }}</ion-card-title>
+        <ion-card-subtitle>
+          {{ scanResult.card?.set_name }} ({{ scanResult.card?.set | uppercase }})
+          <ion-badge [color]="scanResult.confidence === 'high' ? 'success' : 'warning'">
+            {{ scanResult.confidence === 'high' ? 'Alta' : 'Média' }} confiança
+          </ion-badge>
+        </ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content class="card-preview">
+        <img [src]="scanResult.imageUrl" alt="Card image" class="card-image" />
+      </ion-card-content>
+    </ion-card>
+    <div class="action-buttons">
+      <ion-button expand="block" color="success" (click)="confirmAddCard()">
+        ✓ Adicionar à coleção
+      </ion-button>
+      <ion-button expand="block" color="medium" (click)="retry()">
+        ✗ Tentar de novo
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,53 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ collection?.name || 'Coleção' }} ({{ totalQty }})</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="exportCollection()" *ngIf="cards.length > 0">
+        <ion-icon name="share-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">{{ collection?.name || 'Coleção' }} ({{ totalQty }})</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div *ngIf="cards.length === 0" class="empty-state">
+    <ion-text color="medium">
+      <p>Nenhuma carta nesta coleção.</p>
+    </ion-text>
+    <ion-button expand="block" (click)="goBack()">Voltar</ion-button>
+  </div>
+
+  <ion-list *ngIf="cards.length > 0">
+    <ion-item-sliding *ngFor="let card of cards">
+      <ion-item>
+        <ion-thumbnail slot="start" class="card-thumb">
+          <img [src]="card.image_url" (error)="card.image_url = undefined" />
+          <div class="thumb-placeholder" *ngIf="!card.image_url">{{ card.name[0] }}</div>
+        </ion-thumbnail>
+        <ion-label>
+          <h2>{{ card.name }}</h2>
+          <p>{{ card.set_code | uppercase }} • #{{ card.collector_number }}</p>
+        </ion-label>
+        <div class="qty-controls" slot="end">
+          <ion-button size="small" fill="outline" (click)="decrementQty(card)" [disabled]="card.qty <= 0">-</ion-button>
+          <ion-badge color="primary">{{ card.qty }}</ion-badge>
+          <ion-button size="small" fill="outline" (click)="incrementQty(card)">+</ion-button>
+        </div>
+      </ion-item>
+      <ion-item-options side="end">
+        <ion-item-option color="danger" (click)="removeCard(card)">Remover</ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>

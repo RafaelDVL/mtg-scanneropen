@@ -1,0 +1,43 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goToScanner()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Coleções</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="createCollection()">
+        <ion-icon name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Coleções</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div *ngIf="collections.length === 0" class="empty-state">
+    <ion-text color="medium">
+      <p>Nenhuma coleção ainda.</p>
+      <p>Crie uma coleção ou use o scanner para adicionar cartas.</p>
+    </ion-text>
+    <ion-button expand="block" (click)="goToScanner()">Ir para o Scanner</ion-button>
+  </div>
+
+  <ion-list *ngIf="collections.length > 0">
+    <ion-item *ngFor="let col of collections" (click)="openCollection(col.id!)" detail>
+      <ion-label>
+        <h2>{{ col.name }}</h2>
+        <p>{{ col.cardCount }} carta{{ col.cardCount !== 1 ? 's' : '' }}</p>
+      </ion-label>
+      <ion-note slot="end">
+        <ion-icon name="chevron-forward"></ion-icon>
+      </ion-note>
+    </ion-item>
+  </ion-list>
+</ion-content>

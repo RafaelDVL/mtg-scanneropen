@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">mtg-scanneropen</string>
+    <string name="title_activity_main">mtg-scanneropen</string>
+    <string name="package_name">mtg.scanneropen</string>
+    <string name="custom_url_scheme">mtg.scanneropen</string>
+</resources>
