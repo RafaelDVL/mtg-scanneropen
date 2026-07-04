@@ -50,7 +50,9 @@ export class CollectionDetailPage implements OnInit {
       this.cards = await this.db.getCardsInCollection(this.collection.id);
       this.totalQty = this.cards.reduce((sum, c) => sum + c.qty, 0);
       this.totalPrice = this.cards.reduce((sum, c) => sum + ((c.price_usd || 0) * c.qty), 0);
-    } catch {}
+    } catch (e) {
+      console.error('Error loading cards:', e);
+    }
   }
 
   async incrementQty(card: CollectionCard) {
