@@ -97,7 +97,9 @@ export class ScannerPage implements OnInit, OnDestroy {
   private async loadTotal() {
     try {
       this.totalCards = await this.db.getTotalCardCount();
-    } catch {}
+    } catch (e) {
+      console.error('Error loading total cards:', e);
+    }
   }
 
   async capturePhoto() {
