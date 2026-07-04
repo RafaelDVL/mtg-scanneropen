@@ -103,6 +103,10 @@ export class ScryfallService {
   }
 
   async lookupByNameFuzzy(name: string): Promise<ScryfallCard | null> {
+    const key = `fuzzy_${name.toLowerCase()}`;
+    const cached = this.getFromCache(key);
+    if (cached) return cached;
+
     await this.throttle();
     try {
       const response = await fetch(`https://api.scryfall.com/cards/named?fuzzy=${encodeURIComponent(name)}`, {
@@ -110,6 +114,7 @@ export class ScryfallService {
       });
       if (!response.ok) return null;
       const data: ScryfallCard = await response.json();
+      this.setCache(key, data);
       return data;
     } catch {
       return null;
