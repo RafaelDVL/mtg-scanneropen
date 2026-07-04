@@ -239,7 +239,7 @@ export class ScannerPage implements OnInit, OnDestroy {
   private async promptNewCollection(card: ScryfallCard) {
     const alert = await this.alertCtrl.create({
       header: 'Nova coleção',
-      inputs: [{ name: 'name', placeholder: 'Nome da coleção', type: 'text' }],
+      inputs: [{ name: 'name', placeholder: 'Nome da coleção', type: 'text', attributes: { maxlength: 50 } }],
       buttons: [
         { text: 'Cancelar', role: 'cancel' },
         {
