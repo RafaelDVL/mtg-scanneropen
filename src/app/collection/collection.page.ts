@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { DatabaseService, Collection } from '../services/database.service';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonButtons, IonButton, IonText, IonIcon, IonBadge, IonNote } from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonButtons, IonButton, IonText, IonIcon, IonNote } from '@ionic/angular/standalone';
 import { NgFor, NgIf } from '@angular/common';
 import { addIcons } from 'ionicons';
 import { arrowBack, chevronForward, add } from 'ionicons/icons';
