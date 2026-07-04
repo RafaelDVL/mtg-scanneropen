@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { DatabaseService, Collection } from '../services/database.service';
 import { IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonButtons, IonButton, IonText, IonIcon, IonBadge, IonNote } from '@ionic/angular/standalone';
@@ -19,13 +19,13 @@ import { AlertController } from '@ionic/angular/standalone';
   ],
 })
 export class CollectionPage implements OnInit {
+  private db = inject(DatabaseService);
+  private router = inject(Router);
+  private alertCtrl = inject(AlertController);
+
   collections: (Collection & { cardCount: number, totalPrice: number })[] = [];
 
-  constructor(
-    private db: DatabaseService,
-    private router: Router,
-    private alertCtrl: AlertController
-  ) {
+  constructor() {
     addIcons({ arrowBack, chevronForward, add });
   }
 
@@ -56,14 +56,32 @@ export class CollectionPage implements OnInit {
   async createCollection() {
     const alert = await this.alertCtrl.create({
       header: 'Nova coleção',
-      inputs: [{ name: 'name', placeholder: 'Nome da coleção', type: 'text' }],
+      inputs: [
+        {
+          name: 'name',
+          placeholder: 'Nome da coleção',
+          type: 'text',
+          attributes: {
+            maxlength: 50,
+            pattern: '^[a-zA-Z0-9À-ÿ\\s\\-_]+$',
+          },
+        },
+      ],
       buttons: [
         { text: 'Cancelar', role: 'cancel' },
         {
           text: 'Criar',
           handler: async (data) => {
-            if (!data.name?.trim()) return;
-            await this.db.createCollection(data.name.trim());
+            const trimmedName = data.name?.trim();
+            if (!trimmedName) return;
+
+            // Security Validation: prevent long inputs and special characters
+            const validPattern = /^[a-zA-Z0-9À-ÿ\s\-_]+$/;
+            if (trimmedName.length > 50 || !validPattern.test(trimmedName)) {
+              return; // Input rejected
+            }
+
+            await this.db.createCollection(trimmedName);
             await this.loadCollections();
           },
         },
