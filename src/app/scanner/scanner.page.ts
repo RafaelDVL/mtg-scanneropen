@@ -24,6 +24,8 @@ interface ScanResult {
   confidence: 'high' | 'medium' | 'low';
 }
 
+const LANGUAGE_BLACKLIST = new Set(['EN', 'PT', 'ES', 'FR', 'DE', 'IT', 'JA', 'KO', 'RU', 'ZH', 'HE']);
+
 @Component({
   selector: 'app-scanner',
   templateUrl: 'scanner.page.html',
@@ -180,15 +182,13 @@ export class ScannerPage implements OnInit, OnDestroy {
   }
 
   private buildFuzzyName(items: string[], parsed: ParsedOcrResult): string | null {
-    const blacklist = new Set([
-      ...(parsed.setCode ? [parsed.setCode] : []),
-      ...(parsed.collectorNumber ? [parsed.collectorNumber] : []),
-      'EN', 'PT', 'ES', 'FR', 'DE', 'IT', 'JA', 'KO', 'RU', 'ZH', 'HE',
-    ]);
     for (const item of items) {
       const t = item.replace(/[•·●■\-_]/g, ' ').trim();
-      if (t.length > 3 && !blacklist.has(t.toUpperCase()) && !/^\d/.test(t)) {
-        return t;
+      if (t.length > 3 && !/^\d/.test(t)) {
+        const upper = t.toUpperCase();
+        if (!LANGUAGE_BLACKLIST.has(upper) && upper !== parsed.setCode && upper !== parsed.collectorNumber) {
+          return t;
+        }
       }
     }
     return null;
