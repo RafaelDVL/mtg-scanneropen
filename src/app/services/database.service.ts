@@ -230,12 +230,23 @@ export class DatabaseService {
 
   async getTotalCardCount(): Promise<number> {
     const db = await this.ensureDB();
-    const collections = await this.getAllCollections();
-    let total = 0;
-    for (const col of collections) {
-      const cards = await this.getCardsInCollection(col.id!);
-      total += cards.reduce((sum, c) => sum + c.qty, 0);
-    }
-    return total;
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction('collection_cards', 'readonly');
+      const store = tx.objectStore('collection_cards');
+      const request = store.openCursor();
+      let total = 0;
+
+      request.onsuccess = (event) => {
+        const cursor = (event.target as IDBRequest<IDBCursorWithValue>).result;
+        if (cursor) {
+          total += cursor.value.qty;
+          cursor.continue();
+        } else {
+          resolve(total);
+        }
+      };
+
+      request.onerror = () => reject(request.error);
+    });
   }
 }
