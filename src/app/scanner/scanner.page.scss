@@ -117,3 +117,15 @@ ion-content.scanner-content::part(background) {
   gap: 8px;
   margin-top: 16px;
 }
+
+.set-name {
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.badge-container {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}

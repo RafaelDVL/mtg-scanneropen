@@ -48,13 +48,15 @@
       <ion-card-header>
         <ion-card-title>{{ scanResult.card?.name }}</ion-card-title>
         <ion-card-subtitle>
-          {{ scanResult.card?.set_name }} ({{ scanResult.card?.set | uppercase }})
-          <ion-badge [color]="scanResult.confidence === 'high' ? 'success' : 'warning'">
-            {{ scanResult.confidence === 'high' ? 'Alta' : 'Média' }} confiança
-          </ion-badge>
-          <ion-badge color="primary" *ngIf="scanResult.card?.prices?.usd" class="price-badge">
-            $ {{ scanResult.card?.prices?.usd }}
-          </ion-badge>
+          <div class="set-name">{{ scanResult.card?.set_name }} ({{ scanResult.card?.set | uppercase }})</div>
+          <div class="badge-container">
+            <ion-badge [color]="scanResult.confidence === 'high' ? 'success' : 'warning'">
+              {{ scanResult.confidence === 'high' ? 'Alta' : 'Média' }} confiança
+            </ion-badge>
+            <ion-badge color="primary" *ngIf="scanResult.card?.prices?.usd" class="price-badge">
+              $ {{ scanResult.card?.prices?.usd }}
+            </ion-badge>
+          </div>
         </ion-card-subtitle>
       </ion-card-header>
       <ion-card-content class="card-preview">
